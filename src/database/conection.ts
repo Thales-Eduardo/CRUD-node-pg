@@ -11,5 +11,5 @@ export const createConection = async () => {
 
   await client.connect();
 
-  return { client };
+  return client;
 };

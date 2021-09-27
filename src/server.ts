@@ -1,16 +1,16 @@
 import express, { Request, Response, NextFunction } from 'express';
 import cors from 'cors';
 import 'express-async-errors';
-// import router from "./router";
+import { router } from './routes';
 
-import AppErrors from './errors/AppErrors';
+import { AppErrors } from './errors/AppErrors';
 import './database/runMigrations';
 const app = express();
 const port = 3333;
 
 app.use(express.json());
 app.use(cors());
-// app.use(router);
+app.use(router);
 
 app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
   if (err instanceof AppErrors) {

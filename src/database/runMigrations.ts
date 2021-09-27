@@ -3,7 +3,7 @@ import { readdir, readFile } from 'fs';
 import { createConection } from './conection';
 
 (async () => {
-  const { client } = await createConection();
+  const client = await createConection();
   const fileDatabaseDir = path.join(__dirname, 'migrations');
 
   console.log(new Date(), 'Start migrations 🔥');
