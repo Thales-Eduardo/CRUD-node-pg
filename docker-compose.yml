@@ -1,0 +1,27 @@
+version: '3'
+
+services:
+  postgres_bd:
+    image: postgres
+    restart: always
+    container_name: postgres
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=docker
+      - POSTGRES_DB=node-pg
+    volumes:
+      - ./pgdata:/data/postgres
+
+  api:
+    build: .
+    image: node-pg
+    restart: always
+    container_name: node
+    ports:
+      - 3333:3333
+    volumes:
+      - .:/usr/api
+    depends_on:
+      - postgres_bd
