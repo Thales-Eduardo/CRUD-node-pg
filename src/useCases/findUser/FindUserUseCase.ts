@@ -1,4 +1,4 @@
-import { User } from '../../entities/User';
+import { AppErrors } from '../../errors/AppErrors';
 import { IPostgresRepository } from '../../repositories/methods/IPostgresRepository';
 
 interface Request {
@@ -9,14 +9,10 @@ export class FindUserUseCase {
   constructor(private usersRepository: IPostgresRepository) {}
 
   public async execute({ id }: Request) {
-    let user = new User();
+    if (!id) {
+      throw new AppErrors('Id inválido!');
+    }
 
-    user = Object.assign({
-      id,
-    });
-
-    await this.usersRepository.createUser(user);
-
-    return user;
+    return await this.usersRepository.findById(id);
   }
 }

@@ -6,7 +6,7 @@ import { UsersPostgresRepositories } from '../../repositories/implementations/Us
 const usersPostgresRepositories = new UsersPostgresRepositories();
 
 export class FindUserController {
-  public async create(req: Request, res: Response) {
+  public async index(req: Request, res: Response) {
     const { id } = req.params;
 
     const createUser = new FindUserUseCase(usersPostgresRepositories);
