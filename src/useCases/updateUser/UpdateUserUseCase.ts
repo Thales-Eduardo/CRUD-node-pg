@@ -3,21 +3,24 @@ import { IPostgresRepository } from '../../repositories/methods/IPostgresReposit
 
 interface Request {
   id: string;
+  name: string;
+  email: string;
 }
 
-export class FindUserUseCase {
+export class UpdateUserUseCase {
   constructor(private usersRepository: IPostgresRepository) {}
 
-  public async execute({ id }: Request) {
+  public async execute({ id, name, email }: Request): Promise<void> {
     if (!id) {
       throw new AppErrors('Id inválido!');
     }
+
     const user = await this.usersRepository.findById(id);
 
     if (!user) {
       throw new AppErrors('Usuário inválido!');
     }
 
-    return user;
+    await this.usersRepository.update({ id, name, email });
   }
 }

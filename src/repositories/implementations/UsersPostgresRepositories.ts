@@ -4,7 +4,6 @@ import { User } from '../../entities/User';
 
 import { IPostgresRepository } from '../methods/IPostgresRepository';
 import { IPostgresRepositoriesDTO } from '../dtos/IPostgresRepositoriesDTO';
-import { AppErrors } from '../../errors/AppErrors';
 
 export class UsersPostgresRepositories implements IPostgresRepository {
   private client: Pool;
@@ -24,25 +23,40 @@ export class UsersPostgresRepositories implements IPostgresRepository {
     );
   }
 
-  public async findById(idUser: string): Promise<User> {
+  public async findById(idUser: string): Promise<User | null> {
     const { rows } = await this.client.query(
       'SELECT * FROM USERS WHERE ID = $1 LIMIT 1',
       [idUser],
     );
 
-    if (!rows) {
-      throw new AppErrors('Id inválido!');
+    if (rows.length > 0) {
+      const { id, name, email, date } = rows[0];
+
+      const user = {
+        id,
+        name,
+        email,
+        date,
+      };
+
+      return user;
     }
 
-    const { id, name, email, date } = rows[0];
+    return null;
+  }
 
-    const user = {
-      id,
-      name,
-      email,
-      date,
-    };
+  public async update({
+    id,
+    name,
+    email,
+  }: IPostgresRepositoriesDTO): Promise<unknown> {
+    return await this.client.query(
+      'UPDATE USERS SET NAME = $1, EMAIL = $2 WHERE ID = $3',
+      [name, email, id],
+    );
+  }
 
-    return user;
+  public async delete(id: string): Promise<void> {
+    await this.client.query('DELETE FROM USERS WHERE ID = $1', [id]);
   }
 }
