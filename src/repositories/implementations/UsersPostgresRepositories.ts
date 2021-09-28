@@ -45,6 +45,22 @@ export class UsersPostgresRepositories implements IPostgresRepository {
     return null;
   }
 
+  public async findAllUsers(
+    limit: number,
+    offset: number,
+  ): Promise<any[] | null> {
+    const { rows } = await this.client.query(
+      'SELECT * FROM USERS LIMIT $1 OFFSET $2',
+      [limit, offset],
+    );
+
+    if (rows.length > 0) {
+      return rows;
+    }
+
+    return null;
+  }
+
   public async update({
     id,
     name,

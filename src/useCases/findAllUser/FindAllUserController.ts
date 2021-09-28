@@ -1,17 +1,19 @@
 import { Request, Response } from 'express';
 
-import { FindUserUseCase } from './FindUserUseCase';
+import { FindAllUserUseCase } from './FindAllUserUseCase';
 import { UsersPostgresRepositories } from '../../repositories/implementations/UsersPostgresRepositories';
 
 const usersPostgresRepositories = new UsersPostgresRepositories();
 
-export class FindUserController {
+export class FindAllUserController {
   public async index(req: Request, res: Response) {
-    const { id } = req.params;
+    const { take, skip = 1 } = req.query;
 
-    const findUserUseCase = new FindUserUseCase(usersPostgresRepositories);
+    const findAllUserUseCase = new FindAllUserUseCase(
+      usersPostgresRepositories,
+    );
 
-    const user = await findUserUseCase.execute({ id });
+    const user = await findAllUserUseCase.execute({ take, skip });
 
     return res.status(200).json(user);
   }
