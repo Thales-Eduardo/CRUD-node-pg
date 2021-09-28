@@ -4,6 +4,8 @@ Para iniciar a aplicação.
 
 > docker-compose up -d
 
+deletar os contêineres.
+
 > docker-compose down
 
 Essa api simples e apenas uma introdução, porem esta pronta para escalar caso queira.
