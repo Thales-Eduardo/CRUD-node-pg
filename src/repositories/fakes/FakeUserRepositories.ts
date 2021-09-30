@@ -22,9 +22,8 @@ export class FakeUserRepositories implements IPostgresRepository {
     limit: number,
     offset: number,
   ): Promise<any[] | null> {
-    const findUser: any = this.users.find((user) => user);
-    findUser.length = limit;
-    return findUser || null;
+    const user: any = this.users.find((itens) => itens);
+    return user;
   }
 
   public async update(data: User): Promise<unknown> {

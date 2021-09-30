@@ -9,7 +9,7 @@ interface Request {
 export class FindAllUserUseCase {
   constructor(private usersRepository: IPostgresRepository) {}
 
-  public async execute({ take, skip }: Request) {
+  public async execute({ take, skip }: Request): Promise<any[]> {
     const offset = (skip - 1) * take;
     const limit = take;
 

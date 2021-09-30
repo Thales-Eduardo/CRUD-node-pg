@@ -12,6 +12,7 @@ export class FindUserUseCase {
     if (!id) {
       throw new AppErrors('Id inválido!');
     }
+
     const user = await this.usersRepository.findById(id);
 
     if (!user) {
