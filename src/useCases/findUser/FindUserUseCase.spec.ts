@@ -16,17 +16,22 @@ describe('deleteUserUseCase', () => {
     findUserUseCase = new FindUserUseCase(fakeUserRepositories);
   });
 
-  it('Must be able to delete a user', async () => {
+  it('Must be able to list user by id', async () => {
     const user = await createUserUseCase.execute({
       name: 'thales',
       email: 'thalesdev22@gmail.com',
     });
 
     const response = await findUserUseCase.execute({ id: user.id });
-    expect(response).toBe(undefined);
+
+    expect(response).toEqual({
+      id: user.id,
+      name: user.name,
+      email: user.email,
+    });
   });
 
-  it('Not must be able to delete a user', async () => {
+  it('Not must be able to list user by id', async () => {
     await expect(findUserUseCase.execute({ id: '' })).rejects.toBeInstanceOf(
       AppErrors,
     );
