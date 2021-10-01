@@ -16,7 +16,7 @@ describe('updateUserUseCase', () => {
     updateUserUseCase = new UpdateUserUseCase(fakeUserRepositories);
   });
 
-  it('Must be able to list user by id', async () => {
+  it('Must be able to update user data.', async () => {
     const user = await createUserUseCase.execute({
       name: 'thales',
       email: 'thalesdev22@gmail.com',
@@ -31,7 +31,7 @@ describe('updateUserUseCase', () => {
     expect(response).toBe(undefined);
   });
 
-  it('Not must be able to list user by id', async () => {
+  it('Not must be able to update user data.', async () => {
     await expect(
       updateUserUseCase.execute({ id: '', name: '', email: '' }),
     ).rejects.toBeInstanceOf(AppErrors);

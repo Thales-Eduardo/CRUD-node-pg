@@ -14,6 +14,6 @@ export class UpdateUserController {
 
     await updateUserUseCase.execute({ id, name, email });
 
-    return res.status(200).json();
+    return res.status(200).send();
   }
 }
